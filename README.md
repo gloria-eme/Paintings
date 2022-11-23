@@ -1,3 +1,4 @@
 # Paintings
-Proyecto final de Node 
-haciendo un cambio
+
+Proyecto final de Node
+haciendo un conflicto
