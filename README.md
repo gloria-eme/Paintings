@@ -1,3 +1,3 @@
 # Paintings
 Proyecto final de Node 
-haciendo un cambio
+haciendo un change
