@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./rsc/index.js",
-    "dev": "nodemon ./rsc/index.js"
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint src --fix --cache"
   },
   "keywords": [
     "Node",
