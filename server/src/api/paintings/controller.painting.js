@@ -5,7 +5,12 @@ const { deleteFile } = require('../../middlewares/delete-file');
 
 const getPaintings = async (req, res, next) => {
   try {
-    const paintings = await Painting.find().populate('authors');
+    const limit = parseInt(req.query.limit, 10) || 5;
+    const page = parseInt(req.query.page, 10) || 1;
+    const paintings = await Painting.paginate(
+      {},
+      { limit, page }
+    ); /* .populate('authors') */
     return res.json({
       status: 200,
       message: 'Recovered all paintings',

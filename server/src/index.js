@@ -1,3 +1,4 @@
+const compression = require('compression');
 const express = require('express');
 const cors = require('cors');
 
@@ -14,7 +15,7 @@ connect();
 setUpCloudinary();
 
 const app = express();
-
+app.use(compression());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
   res.header('Access-Control-Allow-Credentials', true);

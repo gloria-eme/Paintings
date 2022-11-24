@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const moongosePaginate = require('mongoose-paginate-v2');
 
 const paintingsSchema = new mongoose.Schema(
   {
@@ -12,5 +13,6 @@ const paintingsSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+paintingsSchema.plugin(moongosePaginate);
 
 module.exports = mongoose.model('paintings', paintingsSchema);
