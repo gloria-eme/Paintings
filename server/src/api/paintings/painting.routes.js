@@ -11,7 +11,7 @@ const {
 const { isAuth } = require('../../middlewares/auth.middlewares');
 
 PaintingsRoutes.get('/', getPaintings);
-PaintingsRoutes.post('/', [isAuth], upload.single('image'), postPainting);
+PaintingsRoutes.post('/', upload.single('image'), postPainting);
 PaintingsRoutes.patch('/:id', [isAuth], upload.single('image'), patchPainting);
 PaintingsRoutes.delete('/:id', deletePainting);
 PaintingsRoutes.put(

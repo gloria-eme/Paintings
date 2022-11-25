@@ -5,7 +5,7 @@ const moongosePaginate = require('mongoose-paginate-v2');
 const paintingsSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
-    image: { type: String, required: true },
+    image: { type: String },
     date: { type: String, required: true },
     author: [{ type: mongoose.Schema.Types.ObjectId, ref: 'authors' }],
   },
