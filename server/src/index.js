@@ -52,3 +52,5 @@ app.disable('x-powered-by');
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port: http://localhost:${process.env.PORT}`);
 });
+
+module.exports = { app };

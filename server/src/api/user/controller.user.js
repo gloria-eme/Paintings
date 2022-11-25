@@ -31,6 +31,7 @@ const login = async (req, res, next) => {
         {
           id: userInfo._id,
           username: userInfo.username,
+          role: userInfo.role,
         },
         req.app.get('secretKey'),
         { expiresIn: '10h' }

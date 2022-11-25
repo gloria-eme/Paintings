@@ -7,15 +7,16 @@ const {
   deleteMuseum,
 } = require('./controller.museum');
 
-const { isAuth } = require('../../middlewares/auth.middlewares');
+const { isBasic } = require('../../middlewares/basic.middlewares');
+const { isAdmin } = require('../../middlewares/admin.middlewares');
 
 MuseumsRoutes.get('/', getMuseums);
-MuseumsRoutes.post('/', [isAuth], postMuseum);
-MuseumsRoutes.patch('/:id', [isAuth], patchMuseum);
-MuseumsRoutes.delete('/:id', deleteMuseum);
+MuseumsRoutes.post('/', /* [isBasic], */ postMuseum);
+MuseumsRoutes.patch('/:id', [isBasic], patchMuseum);
+MuseumsRoutes.delete('/:id', [isAdmin], deleteMuseum);
 /* MuseumsRoutes.patch(
   '/addAuthorToPainting/:id',
-  [isAuth],
+  [isBasic],
   upload.single('image'),
   addAuthorToPainting
 ); */

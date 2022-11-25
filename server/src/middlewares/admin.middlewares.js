@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { setError } = require('../utils/error/handle.error');
 
-const isAuth = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   const authorization = req.headers.authorization;
 
   if (!authorization) return res.json(setError(401, 'Not authorized'));
@@ -23,11 +23,15 @@ const isAuth = (req, res, next) => {
   const authority = {
     id: token.id,
     name: token.name,
+    role: token.role,
   };
 
-  req.authority = authority;
-
-  next();
+  if (token.role === 'admin') {
+    req.authority = authority;
+    next();
+  } else {
+    next(setError(401, 'Not authorized'));
+  }
 };
 
-module.exports = { isAuth };
+module.exports = { isAdmin };

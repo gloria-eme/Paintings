@@ -1,89 +1,40 @@
-/* const mongoose = require('mongoose');
+/* const supertest = require('supertest'); */
 const request = require('supertest');
+const { app } = require('../../../index');
+/* const PaintingRoutes = require('../painting.routes'); */
 
-/* const Painting = require('../../paintings/model.painting'); */
+/* const express = require('express');
+const app = new express();
+app.use('/', PaintingRoutes);
 
-const PaintingRoutes = require('../painting.routes');
-const supertest = require('supertest');
-const api = supertest(PaintingRoutes);
+const api = supertest(PaintingRoutes); */
 
-const request = require('supertest');
-const assert = require('assert');
-const express = require('express');
+test('GET paintings', async () => {
+  await request(app).get('/api/paintings').expect(200);
+}, 100000);
 
-/* const app = express(); */
+test('GET paintings fail', async () => {
+  await request(app)
+    .get('/api/paintings/hola')
+    .expect(404)
+    .expect(/Route not found/); //aquí falla porque añadimos un params inexistente
+}, 100000);
 
-api.get('/api/paintings', function (req, res) {
-  res.status(200).json({ name: 'john' });
-});
+/* test('GET paintings fail', () => {
+  api.get('/api/paintings/fulanito').expect(500, 'Fail to recover paintings'); //aquí falla porque añadimos un params inexistente
+});*/
 
-request(api)
-  .get('/api/paintings')
-  .expect('Content-Type', /json/)
-  .expect('Content-Length', '15')
-  .expect(200)
-  .end(function (err, res) {
-    if (err) throw err;
-  });
-
-/* const initialPainting = [
-  {
-    name: 'Patatas fritas al óleo',
-    date: new Date(),
-  },
-  {
-    name: 'Ay que vientecito hay en Málaga',
-    date: new Date(),
-  },
-];
-
-beforeEach(async () => {
-  await Painting.deleteMany({});
-
-  const painting1 = new Painting(initialPainting[0]);
-  await painting1.save();
-
-  const painting2 = new Painting(initialPainting[1]);
-  await painting2.save();
-}); */
-
-/* test('Get paintings as json', async () => {
-  await api.get('/api/paintings').expect(200);
-}); */
-
-/* describe('GET /api', function () {
-  it('responds with json', function (done) {
-    request(api)
-      .get('/api/paintings')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-}); */
-
-/* test('hay dos notas', async () => {
-  const response = await api.get('/api/paintings');
-  expect(response.body).toHaveLength(initialPainting.length);
-});
- */
-/* test('Post a new painting', async () => {
+test('Post a new painting', async () => {
   const newPainting = {
     name: 'Guernica',
     date: '1937',
+    authorId: '637f50da8b678b516468737d',
   };
-  await api
+  await request(app)
     .post('/api/paintings')
+    /* .auth('username', 'password') */
     .send(newPainting)
     .expect(201)
-    .expect('Content-Type', /application\/json/);
-
-  const response = await api.get('/api/paintings');
-  const contents = response.body.map((painting) => painting.name);
-  expect(response.body).toHaveLenght(helper.initialPaintings.lenght + 1);
-  expect(contents).toContain('Guernica');
-}); */
-
-/* afterAll(() => {
-  mongoose.connection.close();
-  server.close();
-}); */
+    .expect('Content-Type', /application\/json/)
+    .expect('Created Painting');
+});
