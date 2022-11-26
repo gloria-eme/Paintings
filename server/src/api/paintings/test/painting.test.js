@@ -18,15 +18,15 @@ test('GET paintings ', async () => {
   const res = await request(app).get('/api/paintings');
   expect(res.statusCode).toEqual(200);
   expect(res.body.message).toEqual('Recovered all paintings');
-}, 100000);
+}, 10000);
 
 test('GET in Route Not Found', async () => {
   const res = await request(app).get('/api/painting/hola');
   expect(res.statusCode).toEqual(404);
   expect(/Route Not Found/); //aquí falla porque añadimos un params inexistente
-}, 100000);
+}, 10000);
 
-test.only('Post a new painting', async () => {
+test('Post a new painting', async () => {
   await request(app)
     .post('/api/paintings')
     .send(newPainting)
@@ -35,10 +35,11 @@ test.only('Post a new painting', async () => {
       expect(res.body.message).toEqual('Created Painting');
     })
     .then((res) => {
-      /*     newPainting._id = res.body._id;  */
-      console.log(res.res);
+      const data = JSON.parse(res.res.text);
+      newPainting._id = data.data.newPainting._id;
+      console.log(newPainting);
     });
-});
+}, 10000);
 
 test('Delete a painting', async () => {
   await request(app)
@@ -47,7 +48,7 @@ test('Delete a painting', async () => {
     .expect((res) => {
       expect(res.body.message).toEqual('painting deleted');
     });
-}, 150000);
+}, 15000);
 /* test('post a movie with res', async () => {
   const newPainting = {
     name: 'Esto es un test',
