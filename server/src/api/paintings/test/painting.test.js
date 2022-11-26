@@ -34,10 +34,11 @@ test('Post a new painting', async () => {
     .expect((res) => {
       expect(res.body.message).toEqual('Created Painting');
     })
-    .then((res) => {
-      const data = JSON.parse(res.res.text);
-      newPainting._id = data.data.newPainting._id;
-      console.log(newPainting);
+    .then((response) => {
+      const { res } = response;
+      const jsonText = JSON.parse(res.text);
+      const { data } = jsonText;
+      newPainting._id = data.newPainting._id;
     });
 }, 10000);
 
