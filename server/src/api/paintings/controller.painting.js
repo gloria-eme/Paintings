@@ -35,8 +35,7 @@ const postPainting = async (req, res, next) => {
     author.paintings = author.paintings.concat(newPaintingInDB._id);
     await author.save();
 
-    return res.json({
-      status: 201,
+    return res.status(201).json({
       message: 'Created Painting',
       data: { newPainting },
     });

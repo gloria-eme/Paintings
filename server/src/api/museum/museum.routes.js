@@ -12,8 +12,8 @@ const { isAdmin } = require('../../middlewares/admin.middlewares');
 
 MuseumsRoutes.get('/', getMuseums);
 MuseumsRoutes.post('/', /* [isBasic], */ postMuseum);
-MuseumsRoutes.patch('/:id', [isBasic], patchMuseum);
-MuseumsRoutes.delete('/:id', [isAdmin], deleteMuseum);
+MuseumsRoutes.patch('/:id', /* [isBasic], */ patchMuseum);
+MuseumsRoutes.delete('/:id', /* [isAdmin], */ deleteMuseum);
 /* MuseumsRoutes.patch(
   '/addAuthorToPainting/:id',
   [isBasic],

@@ -17,8 +17,12 @@ PaintingsRoutes.post(
   /*  [isBasic], */ upload.single('image'),
   postPainting
 );
-PaintingsRoutes.patch('/:id', [isBasic], upload.single('image'), patchPainting);
-PaintingsRoutes.delete('/:id', [isAdmin], deletePainting);
+PaintingsRoutes.patch(
+  '/:id',
+  /* [isBasic], */ upload.single('image'),
+  patchPainting
+);
+PaintingsRoutes.delete('/:id', /* [isAdmin],  */ deletePainting);
 PaintingsRoutes.put(
   '/addauthortopainting',
   [isBasic],

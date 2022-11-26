@@ -11,7 +11,7 @@ const { isBasic } = require('../../middlewares/basic.middlewares');
 const { isAdmin } = require('../../middlewares/admin.middlewares');
 
 AuthorsRoutes.get('/', getAuthors);
-AuthorsRoutes.post('/', [isBasic], postAuthor);
+AuthorsRoutes.post('/', /* [isBasic], */ postAuthor);
 AuthorsRoutes.patch('/:id', [isBasic], patchAuthor);
 AuthorsRoutes.delete('/:id', [isAdmin], deleteAuthor);
 /* AuthorRoutes.patch(
