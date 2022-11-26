@@ -1,6 +1,7 @@
 const compression = require('compression');
 const express = require('express');
 const cors = require('cors');
+const passport = require('passport');
 
 const { connect } = require('./utils/database/connect');
 const { setUpCloudinary } = require('./utils/cloudinary/cloudinary');
@@ -22,6 +23,17 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
+
+app.use(require('serve-static')(__dirname + './public'));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(
+  require('express-session')({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 app.use(
   cors({
