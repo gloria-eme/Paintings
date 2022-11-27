@@ -17,6 +17,7 @@ api.get('/api/paintings', function (req, res) {
   res.status(200).json({ name: 'john' });
 });
 
+<<<<<<< Updated upstream
 request(api)
   .get('/api/paintings')
   .expect('Content-Type', /json/)
@@ -25,6 +26,36 @@ request(api)
   .end(function (err, res) {
     if (err) throw err;
   });
+=======
+describe('POST paintings', () => {
+  test('Post a new painting', async () => {
+    await request(app)
+      .post('/api/paintings')
+      .send(newPainting)
+      .expect(201)
+      .expect((res) => {
+        expect(res.body.message).toEqual('Created Painting');
+      })
+      .then((response) => {
+        const { res } = response;
+        const jsonText = JSON.parse(res.text);
+        const { data } = jsonText;
+        newPainting._id = data.newPainting._id;
+      });
+  }, 10000);
+  test('Post a new painting FAIL', async () => {
+    await request(app)
+      .post('/api/paintings')
+      .send({
+        nombre: `name_${new Date().getTime()}`,
+      })
+      .expect(500);
+    /*  .expect(res.body.message)
+    .toBe('Failed in painting post'); */
+    /* assert.equal(res.body.message, 'Resource Not Found'); */
+  }, 10000);
+});
+>>>>>>> Stashed changes
 
 /* const initialPainting = [
   {

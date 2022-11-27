@@ -26,6 +26,7 @@ const postPainting = async (req, res, next) => {
     const { authorId } = req.body;
     const author = await Author.findById(authorId);
 
+<<<<<<< Updated upstream
     const paintingObject = { ...req.body };
 
     if (author) {
@@ -33,6 +34,9 @@ const postPainting = async (req, res, next) => {
     }
 
     const newPainting = new Painting(paintingObject);
+=======
+    const newPainting = new Painting({ ...req.body});
+>>>>>>> Stashed changes
 
     if (req.file) {
       newPainting.image = req.file.path;
