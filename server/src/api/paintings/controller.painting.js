@@ -26,14 +26,24 @@ const postPainting = async (req, res, next) => {
     const { authorId } = req.body;
     const author = await Author.findById(authorId);
 
-    const newPainting = new Painting({ ...req.body, author: author._id });
+    const paintingObject = { ...req.body };
+
+    if (author) {
+      paintingObject.author = author._id;
+    }
+
+    const newPainting = new Painting(paintingObject);
 
     if (req.file) {
       newPainting.image = req.file.path;
     }
+
     const newPaintingInDB = await newPainting.save();
-    author.paintings = author.paintings.concat(newPaintingInDB._id);
-    await author.save();
+
+    if (author) {
+      author.paintings = author.paintings.concat(newPaintingInDB._id);
+      await author.save();
+    }
 
     return res.status(201).json({
       message: 'Created Painting',

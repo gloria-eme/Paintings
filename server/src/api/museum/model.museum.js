@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const museumSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
-    country: { type: String, required: true },
+    city: { type: String, required: true },
     paintings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'paintings' }],
   },
   {
