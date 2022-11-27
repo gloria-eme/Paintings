@@ -46,6 +46,6 @@ UserRoutes.post('/register', register);
 UserRoutes.post('/login', login);
 UserRoutes.get('/', getUsers);
 UserRoutes.delete('/:id', [isAdmin], deleteUser);
-UserRoutes.patch('/:id', [isAdmin], updateUser);
+UserRoutes.patch('/:id', [isBasic], updateUser);
 
 module.exports = UserRoutes;

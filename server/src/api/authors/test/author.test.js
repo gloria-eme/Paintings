@@ -1,27 +1,30 @@
-/* const supertest = require('supertest'); */
 const request = require('supertest');
 const { app } = require('../../../index');
-const assert = require('assert');
-const mongoose = require('mongoose');
 
 const newAuthor = {
   name: `name_${new Date().getTime()}`,
   lifedate: '1881/1973',
   country: 'Spain',
-  // paintings: '637f50da8b678b516468737d',
 };
 
 describe('GET authors', () => {
+  // listen EADDRINUSE: address already in use :::8080
   test('all authors returned', async () => {
-    const res = await request(app).get('/api/authors');
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.message).toEqual('Recovered all authors');
+    await request(app)
+      .get('/api/authors')
+      .expect((res) => {
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.message).toEqual('Recovered all authors');
+      });
   });
 
   test('fail in getting the authors', async () => {
-    const res = await request(app).get('/api/author');
-    expect(res.statusCode).toEqual(404);
-    expect(/Route Not Found/);
+    await request(app)
+      .get('/api/author')
+      .expect((res) => {
+        expect(res.statusCode).toEqual(404);
+        expect(/Route Not Found/);
+      });
   });
 });
 
@@ -29,7 +32,6 @@ describe('POST authors', () => {
   test('Post a new author', async () => {
     await request(app)
       .post('/api/authors')
-      // .auth('username', 'password')
       .send(newAuthor)
       .expect((res) => {
         expect(res.body.status).toEqual(201);
@@ -50,12 +52,7 @@ describe('POST authors', () => {
         name: `name_${new Date().getTime()}`,
       })
 
-      // .expect('Failed in painting post');
-      .expect((res) => {
-        // sale cannot POST /api/authors (500)
-        expect(res.error.message).toEqual('Failed in author');
-        console.log(res.error.message);
-      });
+      .expect(500);
   }, 3000);
 });
 
@@ -69,13 +66,3 @@ describe('DELETE a author', () => {
       });
   });
 });
-
-/* afterAll(async () => {
-  await app.close();
-  await mongoose.close();
-});
-afterAll(async () => {
-  await new Promise((resolve) =>
-    setTimeout(() => resolve(mongoose.close()), 200)
-  );
-}); */

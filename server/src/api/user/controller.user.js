@@ -11,7 +11,7 @@ const register = async (req, res, next) => {
 
     if (userDuplicate) return next('User alredy exists');
 
-    /* const newUserDb = */ newUser.save();
+    const newUserDb = newUser.save();
     return res.json({
       status: 201,
       message: 'user registered',
