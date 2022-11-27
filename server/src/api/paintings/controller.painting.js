@@ -72,10 +72,10 @@ const patchPainting = async (req, res, next) => {
       old: paintingDB,
     });
   } catch (error) {
-    return next(setError(500, error.message | 'Failed in painting update'));
+    return next(setError(500, 'Failed in painting update'));
   }
 };
-const addAuthorToPainting = async (req, res, next) => {
+const addAuthor = async (req, res, next) => {
   try {
     const { paintingId } = req.body;
     const { authorId } = req.body;
@@ -86,7 +86,7 @@ const addAuthorToPainting = async (req, res, next) => {
     );
     return res.status(200).json(updatePainting);
   } catch (error) {
-    return next(setError(500, error.message | 'Failed in painting update'));
+    return next(setError(500, 'Failed in painting update'));
   }
 };
 
@@ -105,7 +105,7 @@ const deletePainting = async (req, res, next) => {
       deletedPainting,
     });
   } catch (error) {
-    return next(setError(500, error.message | 'Failed in painting deletion'));
+    return next(setError(500, 'Failed in painting deletion'));
   }
 };
 
@@ -114,5 +114,5 @@ module.exports = {
   postPainting,
   patchPainting,
   deletePainting,
-  addAuthorToPainting,
+  addAuthor,
 };

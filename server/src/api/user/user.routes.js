@@ -5,7 +5,6 @@ const { isBasic } = require('../../middlewares/basic.middlewares');
 
 const passport = require('passport');
 require('./passportSetup');
-const { isAuth } = require('../../middlewares/auth.middlewares');
 
 const {
   register,
@@ -47,6 +46,6 @@ UserRoutes.post('/register', register);
 UserRoutes.post('/login', login);
 UserRoutes.get('/', getUsers);
 UserRoutes.delete('/:id', [isAdmin], deleteUser);
-UserRoutes.patch('/:id', [isAdmin], updateUser);
+UserRoutes.patch('/:id', [isBasic], updateUser);
 
 module.exports = UserRoutes;

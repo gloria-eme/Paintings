@@ -17,9 +17,7 @@ const getAuthors = async (req, res, next) => {
 const postAuthor = async (req, res, next) => {
   try {
     const newAuthor = new Author(req.body);
-    /*  if (req.file) {
-      newAuthor.image = req.file.path;
-    } */
+
     const newAuthorInDB = await newAuthor.save();
     return res.json({
       status: 201,
@@ -27,7 +25,7 @@ const postAuthor = async (req, res, next) => {
       data: { newAuthor },
     });
   } catch (error) {
-    return next(setError(500, error.message | 'Failed in author post'));
+    return next(setError(500, 'Failed in author post'));
   }
 };
 
@@ -37,10 +35,7 @@ const patchAuthor = async (req, res, next) => {
     const editAuthor = new Author(req.body);
     editAuthor._id = id;
     const authorDB = await Author.findByIdAndUpdate(id, editAuthor);
-    /* if (req.file) {
-      deleteFile(authorDB.image);
-      editauthor.image = req.file.path;
-    } */
+
     if (!authorDB) {
       return next('author not found');
     }
@@ -49,31 +44,15 @@ const patchAuthor = async (req, res, next) => {
       old: authorDB,
     });
   } catch (error) {
-    return next(setError(500, error.message | 'Failed in author update'));
+    return next(setError(500, 'Failed in author update'));
   }
 };
-/* const addAuthorToPainting = async (req, res, next) => {
-  try {
-    const { paintingId } = req.body;
-    const { authorId } = req.body;
-    const updatePainting = await Painting.findByIdAndUpdate(
-      paintingId,
-      { $push: { author: authorId } },
-      { new: true }
-    );
-    return res.status(200).json(updatePainting);
-  } catch (error) {
-    return next(setError(500, error.message | 'Failed in painting update'));
-  }
-};
- */
+
 const deleteAuthor = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedAuthor = await Author.findByIdAndDelete(id);
-    /* if (deletedAuthor.image) {
-      deleteFile(deletedAuthor.image);
-    } */
+
     if (!deletedAuthor) {
       return next(setError(404, 'author not found'));
     }

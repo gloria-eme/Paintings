@@ -46,21 +46,6 @@ const patchMuseum = async (req, res, next) => {
     return next(setError(500, error.message | 'Failed in museum update'));
   }
 };
-/* const addAuthorToPainting = async (req, res, next) => {
-  try {
-    const { paintingId } = req.body;
-    const { authorId } = req.body;
-    const updatePainting = await Painting.findByIdAndUpdate(
-      paintingId,
-      { $push: { author: authorId } },
-      { new: true }
-    );
-    return res.status(200).json(updatePainting);
-  } catch (error) {
-    return next(setError(500, error.message | 'Failed in painting update'));
-  }
-};
- */
 const deleteMuseum = async (req, res, next) => {
   try {
     const { id } = req.params;

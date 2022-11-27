@@ -1,5 +1,5 @@
 const AuthorsRoutes = require('express').Router();
-/* const upload = require('../../middlewares/file'); */
+
 const {
   getAuthors,
   patchAuthor,
@@ -7,18 +7,14 @@ const {
   deleteAuthor,
 } = require('./controller.author');
 
-const { isBasic } = require('../../middlewares/basic.middlewares');
-const { isAdmin } = require('../../middlewares/admin.middlewares');
-
 AuthorsRoutes.get('/', getAuthors);
-AuthorsRoutes.post('/', /* [isBasic], */ postAuthor);
-AuthorsRoutes.patch('/:id', [isBasic], patchAuthor);
-AuthorsRoutes.delete('/:id', [isAdmin], deleteAuthor);
-/* AuthorRoutes.patch(
-  '/addAuthorToPainting/:id',
-  [isBasic],
+AuthorsRoutes.post('/', postAuthor);
+AuthorsRoutes.patch('/:id', patchAuthor);
+AuthorsRoutes.delete('/:id', deleteAuthor);
+AuthorRoutes.patch(
+  '/addAuthor/:id',
   upload.single('image'),
   addAuthorToPainting
-); */
+);
 
 module.exports = AuthorsRoutes;

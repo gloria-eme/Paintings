@@ -1,33 +1,18 @@
 const PaintingsRoutes = require('express').Router();
+
 const upload = require('../../middlewares/file');
 const {
   getPaintings,
   postPainting,
   patchPainting,
   deletePainting,
-  addAuthorToPainting,
+  addAuthor,
 } = require('./controller.painting');
 
-const { isBasic } = require('../../middlewares/basic.middlewares');
-const { isAdmin } = require('../../middlewares/admin.middlewares');
-
 PaintingsRoutes.get('/', getPaintings);
-PaintingsRoutes.post(
-  '/',
-  /*  [isBasic], */ upload.single('image'),
-  postPainting
-);
-PaintingsRoutes.patch(
-  '/:id',
-  /* [isBasic], */ upload.single('image'),
-  patchPainting
-);
-PaintingsRoutes.delete('/:id', /* [isAdmin],  */ deletePainting);
-PaintingsRoutes.put(
-  '/addauthortopainting',
-  [isBasic],
-  upload.single('image'),
-  addAuthorToPainting
-);
+PaintingsRoutes.post('/', upload.single('image'), postPainting);
+PaintingsRoutes.patch('/:id', upload.single('image'), patchPainting);
+PaintingsRoutes.delete('/:id', deletePainting);
+PaintingsRoutes.put('/addauthortopainting', upload.single('image'), addAuthor);
 
 module.exports = PaintingsRoutes;
