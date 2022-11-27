@@ -26,13 +26,22 @@ El proyecto consta de diferentes endpoints que implementan un CRUD de todas esta
 
 - JavaScript
 - NodeJs
+
+Otras Librerías y recursos :
+
 - Express
 - Mongoose
+  - mongoose-paginate-v2
 - Jest y supertest
 - passport
 - JsonWebToken
 - Cloudinary
 - Nodemon
+- Mongo DB
+- Eslint y prettier (formateador de código)
+- Morgan
+- Compression
+- Bcrypt
 
 ## Autores
 
