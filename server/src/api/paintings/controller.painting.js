@@ -10,7 +10,7 @@ const getPaintings = async (req, res, next) => {
     const paintings = await Painting.paginate(
       {},
       { limit, page }
-    ); /* .populate('authors') */
+    );
     return res.json({
       status: 200,
       message: 'Recovered all paintings',
@@ -20,6 +20,17 @@ const getPaintings = async (req, res, next) => {
     return next(setError(500, 'Fail to recover paintings'));
   }
 };
+
+const getPaintingByDate =  async (req, res, next) => {
+  const date = req.params.date;
+  try {
+    const paintingdate = await Painting.find({ date: { $gt: date } });
+      return res.status(200).json(paintingdate);
+  } catch (err) {
+    return next(setError(404, "No painting found over this year"));
+  }
+};
+
 
 const postPainting = async (req, res, next) => {
   try {
@@ -111,6 +122,7 @@ const deletePainting = async (req, res, next) => {
 
 module.exports = {
   getPaintings,
+  getPaintingByDate,
   postPainting,
   patchPainting,
   deletePainting,

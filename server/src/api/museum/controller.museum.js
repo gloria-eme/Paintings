@@ -14,11 +14,21 @@ const getMuseums = async (req, res, next) => {
   }
 };
 
+const getMuseumsByCity = async (req, res, next) => {
+	const {city} = req.params;
+	try {
+		const museumsByCity = await Museum.find({ city: city }).populate('paintings');
+		return res.status(200).json(museumsByCity);
+	} catch (err) {
+		return next(setError(500, 'Fail to recover museums by city'));
+	}
+};
+
 const postMuseum = async (req, res, next) => {
   try {
     const newMuseum = new Museum(req.body);
 
-    const newMuseumInDB = await newMuseum.save();
+    await newMuseum.save();
     return res.json({
       status: 201,
       message: 'Created Museum',
@@ -64,6 +74,7 @@ const deleteMuseum = async (req, res, next) => {
 
 module.exports = {
   getMuseums,
+  getMuseumsByCity,
   postMuseum,
   patchMuseum,
   deleteMuseum,
