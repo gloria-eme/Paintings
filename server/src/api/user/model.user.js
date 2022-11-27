@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     //provider: { type: String, required: true },
     //provider_id: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    role: { type: String, required: true },
     favoriteMuseums: [{ type: mongoose.Schema.Types.ObjectId, ref: 'museums' }],
   },
   {

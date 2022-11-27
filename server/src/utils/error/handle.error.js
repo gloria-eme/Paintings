@@ -1,6 +1,6 @@
 const setError = (code, message) => {
   const error = new Error();
-  error.code = code;
+  error.status = code;
   error.message = message;
   return error;
 };

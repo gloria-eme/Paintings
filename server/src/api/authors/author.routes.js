@@ -7,15 +7,16 @@ const {
   deleteAuthor,
 } = require('./controller.author');
 
-const { isAuth } = require('../../middlewares/auth.middlewares');
+const { isBasic } = require('../../middlewares/basic.middlewares');
+const { isAdmin } = require('../../middlewares/admin.middlewares');
 
 AuthorsRoutes.get('/', getAuthors);
-AuthorsRoutes.post('/', [isAuth], postAuthor);
-AuthorsRoutes.patch('/:id', [isAuth], patchAuthor);
-AuthorsRoutes.delete('/:id', deleteAuthor);
+AuthorsRoutes.post('/', /* [isBasic], */ postAuthor);
+AuthorsRoutes.patch('/:id', [isBasic], patchAuthor);
+AuthorsRoutes.delete('/:id', [isAdmin], deleteAuthor);
 /* AuthorRoutes.patch(
   '/addAuthorToPainting/:id',
-  [isAuth],
+  [isBasic],
   upload.single('image'),
   addAuthorToPainting
 ); */

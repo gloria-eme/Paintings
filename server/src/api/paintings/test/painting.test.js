@@ -1,89 +1,108 @@
-/* const mongoose = require('mongoose');
+/* const supertest = require('supertest'); */
 const request = require('supertest');
+const { app } = require('../../../index');
+/* const PaintingRoutes = require('../painting.routes'); */
 
-/* const Painting = require('../../paintings/model.painting'); */
+/* const express = require('express');
+const app = new express();
+app.use('/', PaintingRoutes);
 
-const PaintingRoutes = require('../painting.routes');
-const supertest = require('supertest');
-const api = supertest(PaintingRoutes);
+const api = supertest(PaintingRoutes); */
+/* const newPainting = {
+  name: `name_${new Date().getTime()}`,
+  date: '2000',
+  authorId: '637f50da8b678b516468737d',
+};
+function loginUser(auth) {
+  return function (done) {
+    request
+      .post('/api/users/login')
+      .send({
+        username: 'juan',
+        password: 'juan',
+      })
+      .expect(200)
+      .end(onResponse);
 
-const request = require('supertest');
-const assert = require('assert');
-const express = require('express');
-
-/* const app = express(); */
-
-api.get('/api/paintings', function (req, res) {
-  res.status(200).json({ name: 'john' });
-});
-
-request(api)
-  .get('/api/paintings')
-  .expect('Content-Type', /json/)
-  .expect('Content-Length', '15')
-  .expect(200)
-  .end(function (err, res) {
-    if (err) throw err;
-  });
-
-/* const initialPainting = [
-  {
-    name: 'Patatas fritas al óleo',
-    date: new Date(),
-  },
-  {
-    name: 'Ay que vientecito hay en Málaga',
-    date: new Date(),
-  },
-];
-
-beforeEach(async () => {
-  await Painting.deleteMany({});
-
-  const painting1 = new Painting(initialPainting[0]);
-  await painting1.save();
-
-  const painting2 = new Painting(initialPainting[1]);
-  await painting2.save();
-}); */
-
-/* test('Get paintings as json', async () => {
-  await api.get('/api/paintings').expect(200);
-}); */
-
-/* describe('GET /api', function () {
-  it('responds with json', function (done) {
-    request(api)
-      .get('/api/paintings')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-}); */
-
-/* test('hay dos notas', async () => {
-  const response = await api.get('/api/paintings');
-  expect(response.body).toHaveLength(initialPainting.length);
-});
- */
-/* test('Post a new painting', async () => {
-  const newPainting = {
-    name: 'Guernica',
-    date: '1937',
+    function onResponse(err, res) {
+      auth.token = res.body.token;
+      return done();
+    }
   };
-  await api
+}
+
+test('GET paintings ', async () => {
+  const res = await request(app).get('/api/paintings');
+  expect(res.statusCode).toEqual(200);
+  expect(res.body.message).toEqual('Recovered all paintings');
+}, 10000);
+
+test('GET in Route Not Found', async () => {
+  const res = await request(app).get('/api/painting/hola');
+  expect(res.statusCode).toEqual(404);
+  expect(/Route Not Found/); //aquí falla porque añadimos un params inexistente
+}, 10000);
+
+test('Post a new painting', async () => {
+  await request(app)
     .post('/api/paintings')
     .send(newPainting)
     .expect(201)
-    .expect('Content-Type', /application\/json/);
+    .expect((res) => {
+      expect(res.body.message).toEqual('Created Painting');
+    })
+    .then((response) => {
+      const { res } = response;
+      const jsonText = JSON.parse(res.text);
+      const { data } = jsonText;
+      newPainting._id = data.newPainting._id;
+    });
+}, 10000);
 
-  const response = await api.get('/api/paintings');
-  const contents = response.body.map((painting) => painting.name);
-  expect(response.body).toHaveLenght(helper.initialPaintings.lenght + 1);
-  expect(contents).toContain('Guernica');
-}); */
+test('Delete a painting', async () => {
+  await request(app)
+    .delete(`/api/paintings/${newPainting._id}`)
+    .expect(200)
+    .expect((res) => {
+      expect(res.body.message).toEqual('painting deleted');
+    });
+}, 15000);
+ */
+var token = null;
 
-/* afterAll(() => {
-  mongoose.connection.close();
-  server.close();
-}); */
+beforeEach(function (done) {
+  request(app)
+    .post('/api/users/login')
+    .send({ username: 'gloria', password: 'gloria' })
+    .end(function (err, res) {
+      token = res.body.token;
+      done();
+    });
+});
+
+test('should get a valid token for user: user1', function (done) {
+  request(app)
+    .post('/api/paintings')
+    .auth(
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U2MmQ1MDlkODNkODA1NzFjYzNhYiIsInVzZXJuYW1lIjoiZ2xvcmlhIiwiaWF0IjoxNjY5NTU5MDIyLCJleHAiOjE2Njk1OTUwMjJ9.fi4acWAe33A6bOS_uNSCfWJWAD6HqA5X8tn6Jsn-Wmo',
+      { type: 'bearer' }
+    )
+    .send({
+      name: `name_${new Date().getTime()}`,
+      date: '2000',
+      authorId: '637f50da8b678b516468737d',
+    })
+    .expect(200);
+});
+
+test.only('login', function (done) {
+  request(app)
+    .post('/api/users/login')
+    /* .set(
+      'Authorization',
+      'Bearer ' +
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U2MmQ1MDlkODNkODA1NzFjYzNhYiIsInVzZXJuYW1lIjoiZ2xvcmlhIiwiaWF0IjoxNjY5NTU5MDIyLCJleHAiOjE2Njk1OTUwMjJ9.fi4acWAe33A6bOS_uNSCfWJWAD6HqA5X8tn6Jsn-Wmo'
+    ) */
+    .send({ username: 'gloria', password: 'gloria' })
+    .expect(200);
+});

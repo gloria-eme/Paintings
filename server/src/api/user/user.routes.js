@@ -1,4 +1,8 @@
 const UserRoutes = require('express').Router();
+
+const { isAdmin } = require('../../middlewares/admin.middlewares');
+const { isBasic } = require('../../middlewares/basic.middlewares');
+
 const passport = require('passport');
 require('./passportSetup');
 const { isAuth } = require('../../middlewares/auth.middlewares');
@@ -42,9 +46,7 @@ UserRoutes.post('/register', register);
 
 UserRoutes.post('/login', login);
 UserRoutes.get('/', getUsers);
-//nuevo endpoint que genera auth con facebook, devuelve callback con token
-
-UserRoutes.delete('/:id', [isAuth], deleteUser);
-UserRoutes.patch('/:id', [isAuth], updateUser);
+UserRoutes.delete('/:id', [isAdmin], deleteUser);
+UserRoutes.patch('/:id', [isAdmin], updateUser);
 
 module.exports = UserRoutes;

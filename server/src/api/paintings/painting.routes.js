@@ -8,15 +8,24 @@ const {
   addAuthorToPainting,
 } = require('./controller.painting');
 
-const { isAuth } = require('../../middlewares/auth.middlewares');
+const { isBasic } = require('../../middlewares/basic.middlewares');
+const { isAdmin } = require('../../middlewares/admin.middlewares');
 
 PaintingsRoutes.get('/', getPaintings);
-PaintingsRoutes.post('/', upload.single('image'), postPainting);
-PaintingsRoutes.patch('/:id', [isAuth], upload.single('image'), patchPainting);
-PaintingsRoutes.delete('/:id', deletePainting);
+PaintingsRoutes.post(
+  '/',
+  /*  [isBasic], */ upload.single('image'),
+  postPainting
+);
+PaintingsRoutes.patch(
+  '/:id',
+  /* [isBasic], */ upload.single('image'),
+  patchPainting
+);
+PaintingsRoutes.delete('/:id', /* [isAdmin],  */ deletePainting);
 PaintingsRoutes.put(
   '/addauthortopainting',
-  [isAuth],
+  [isBasic],
   upload.single('image'),
   addAuthorToPainting
 );
