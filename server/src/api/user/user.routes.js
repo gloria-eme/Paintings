@@ -5,7 +5,6 @@ const { isBasic } = require('../../middlewares/basic.middlewares');
 
 const passport = require('passport');
 require('./passportSetup');
-const { isAuth } = require('../../middlewares/auth.middlewares');
 
 const {
   register,
