@@ -160,6 +160,22 @@ UserRoutes.get(
 );
 ```
 
+**POST**
+Para añadir nuevos datos a la base de datos creamos una función por cada modelo. En ella guardamos la información utilizando como base nuestro *modelo Schema,* y a través de la propiedad *body* enviamos estos datos a nuestros endpoints. Esta función la exportamos al fichero routes donde indicamos qué queremos hacer (un **POST**) y qué ruta vamos a utilizar para ello. De esta manera, si vamos al ThunderClient y añadimos la información, se enviará a la base de datos. 
+
+En el modelo `Paintings` hemos añadido a esta función un trozo de código que nos sirve para que, al añadir en cada `painting` el id de su `author`, automáticamente en dicho `author` se añada también el id de dicha `painting`
+
+```jsx
+const { authorId } = req.body;
+    const author = await Author.findById(authorId);
+
+    const paintingObject = { ...req.body };
+
+    if (author) {
+      paintingObject.author = author._id;
+    }
+```
+
 3.b.IV **Funciones PATCH y DELETE**
 
 En el controlador de cada endpoint aplicamos funciones asíncronas usando los métodos que nos proporciona mongoose para gestionar nuestra base de datos.  
