@@ -148,7 +148,7 @@ Con esto tendríamos todas las dependencias con las que vamos a trabajar. Si rev
 
                     📋 handle.error.js
 
-    📋 index.js
+   	 📋 index.js
 
     📋 .env
 
@@ -170,15 +170,17 @@ En este caso tenemos una carpeta general llamada server que albergará todas las
 
 ### **Conexión con la base de datos**
 
-Para la generación y conexión con nuestra base de datos nos hemos apoyado como hemos señalado en Mongo Atlas, un servicio en la nube para bases de datos desarrollado por el equipo de *mongoDB*, el cual nos ayuda con aspectos como el hosting, instalación y actualización de nuestra base de datos.
+Para la generación y conexión con nuestra base de datos nos hemos apoyado en Mongo Atlas, un servicio en la nube para bases de datos desarrollado por el equipo de *mongoDB*, el cual nos ayuda con aspectos como el hosting, instalación y actualización de nuestra base de datos.
 
-Para ello, hemos creado un nuevo proyecto en nuestro Cluster de Atlas, llamado Paintings, el cual nos genera un *driver* que añadimos a nuestro código en el archivo .env donde vamos a alojar todas la variables de entorno o de configuración (se gestiona a través de dotenv). Nos conectamos a MongoDB en el fichero utils/database/connect.js, y luego lo importamos en el index.js.
+Para ello, hemos creado un nuevo proyecto en nuestro Cluster de Atlas, llamado Paintings, el cual nos genera un *driver* que añadimos a nuestro código en el archivo .env, en el cual vamos a alojar todas la variables de entorno o de configuración (que se gestiona a través de dotenv). Nos conectamos a MongoDB en el fichero utils/database/connect.js, y luego lo importamos en el index.js.
 
+ /connect.js
 ```jsx
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const { setError } = require('../error/handle.error');
 const mongoDB = process.env.MONGO_URI;
+
 const connect = async () => {
   try {
     const db = await mongoose.connect(mongoDB, {
@@ -224,14 +226,17 @@ try {
     const { authorId } = req.body;
     const author = await Author.findById(authorId);
     const paintingObject = { ...req.body };
+    
     if (author) {
       paintingObject.author = author._id;
     }
     const newPainting = new Painting(paintingObject);
+    
     if (req.file) {
       newPainting.image = req.file.path;
     }
     const newPaintingInDB = await newPainting.save();
+    
     if (author) {
       author.paintings = author.paintings.concat(newPaintingInDB._id);
       await author.save();
@@ -258,20 +263,15 @@ passport.use(
         return done(err, user);
       });
     }
-  )
-);
+ ));
 ```
 
 En el archivo user.routes.js están las rutas para acceder al login de usuario por vía Facebook o Google y las rutas de callback exigidas a las cuales van a redirigir después de hacer login. Si hacemos la petición al servidor nos devuelve código html para registrarnos o logearnos.
 
 ```
-UserRoutes.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] })
+UserRoutes.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] })
 );
-UserRoutes.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
+UserRoutes.get('/auth/google/callback', passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/fail',
   })
