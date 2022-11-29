@@ -6,13 +6,6 @@ Una API sobre obras de arte, sus autores y museos donde se exponen.
 
 ## :hammer:Funcionalidades del proyecto
 
-El proyecto consta de diferentes endpoints que implementan un CRUD de todas estas colecciones:
-
-- Museos
-- Autores
-- Obras
-- Usuario
-
 \## 📁 Acceso al proyecto
 
 **Puedes clonar o hacer fork del repositorio: https://github.com/gloria-eme/Paintings**
@@ -21,6 +14,29 @@ El proyecto consta de diferentes endpoints que implementan un CRUD de todas esta
 
 **1. Instalar las dependencias del package.json con el comando `npm i`**
 **2. Ir a la carpeta server y arrancar el servidor con el comando `npm run dev`**
+
+**1. Introducción al proyecto**
+
+1. **Introducción al proyecto**
+
+Hemos construído el **backend** de una API de una **Galería de Arte**. La lógica de nuestro backend se desarrolla a través de cuatro modelos, algunos de ellos relacionados entre sí. Estos modelos son:
+
+- El **usuario**  que entra en nuestra página. Este `user` tendrá que pasar por un registro y un logueo a través del cuál se le otorgará un nivel de autorización para poder interaccionar con la página en menor o mayor grado. Más adelante explicaremos mejor este proceso.
+- Las **obras de arte** que pueden consultarse, en este caso son cuadros (`paintings`), que conectan con su autor.
+- Los **autores** (`authors`), que a la vez están conectados con sus cuadros.
+- Los **museos** (`museums`) que están conectados con los cuadros que se exponen en cada uno de ellos. Cada usuario puede guardar en su perfil sus museos favoritos.
+    
+    
+    Nuestro objetivo es crear un backend sólido, con modelos relacionados entre sí de una forma lógica y pensando en que la experiencia del usuario a través de la página (de un potencial frontend) pueda ser sencilla, visual e intuitiva.
+    
+    Teniendo en cuenta el tiempo del que disponíamos (una semana), nos marcamos unos objetivos base, como son la interrelación entre los modelos, la creación de rutas protegidas mediante un sistema de autorización, crear diferentes endpoints por cada modelo, o el uso de Cloudinary para subir, editar o eliminar imágenes de nuestros endpoints. Una vez definida la estructura base de nuestro proyecto, acordamos como meta poder implementar otras funcionalidades y recursos que ayudarán a tener un backend más sólido y por tanto un frontend más seguro, elaborado y atractivo. Dentro de estas metas estarían comprimir el proyecto, el uso de un social login, la paginación de los resultados, generar usuarios con diferentes roles, y testear nuestro backend con la ayuda de **Jest** y **Supertest**.
+    
+
+Otros recursos externos que hemos utilizado en el proyecto son:
+
+- **Trello**: para la planificación y organización cooperativa del proyecto entre los tres compañeros
+- **Mongo Atlas**: para guardar nuestra base de datos y visualizarla de una manera más sencilla.
+
 
 \## Tecnologias utilizadas
 
