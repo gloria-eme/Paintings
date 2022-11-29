@@ -104,6 +104,38 @@ Nos generamos un archivo .env donde guardamos el Port de Mongo, la URI y las key
 
 Por último, tenemos nuestro archivo índex donde colocamos las credenciales, métodos  y rutas principales. 
 
+**3**
+
+**3.1. Conetarse con la base de datos**
+
+Para la generación y conexión con nuestra base de datos nos hemos apoyado en Mongo Atlas, un servicio en la nube para bases de datos desarrollado por el equipo de *mongoDB*, el cual nos ayuda con aspectos como el hosting, instalación y actualización de nuestra base de datos.
+
+Para ello, hemos creado un nuevo proyecto en nuestro Cluster de Atlas, llamado Paintings, el cual nos genera un *driver* que añadimos a nuestro código en el archivo .env donde vamos a alojar todas la variables de entorno o de configuración (se gestiona a través de dotenv). Nos conectamos a MongoDB en el fichero utils/database/connect.js, y luego nos lo llevamos al index.js, que es el motor que arranca nuestro backend, donde se conectan todas las piezas que lo conforman.
+
+//connect.js,
+```const dotenv = require('dotenv').config();
+
+const mongoose = require('mongoose');
+
+const { setError } = require('../error/handle.error');
+
+const mongoDB = process.env.MONGO_URI;
+
+const connect = async () => {
+  try {
+    const db = await mongoose.connect(mongoDB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    const { name, host } = db.connection;
+    console.log(`Conectado a la base de datos : ${name} en el host: ${host}`);
+  } catch (error) {
+    console.error(setError(550, 'Not connect to DB'));
+  }
+};```
+
+module.exports = { connect };
+
 
 **Social login**
 
