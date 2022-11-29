@@ -174,7 +174,6 @@ Para la generación y conexión con nuestra base de datos nos hemos apoyado en M
 
 Para ello, hemos creado un nuevo proyecto en nuestro Cluster de Atlas, llamado Paintings, el cual nos genera un *driver* que añadimos a nuestro código en el archivo .env, en el cual vamos a alojar todas la variables de entorno o de configuración (que se gestiona a través de dotenv). Nos conectamos a MongoDB en el fichero utils/database/connect.js, y luego lo importamos en el index.js.
 
- /connect.js
 ```jsx
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
