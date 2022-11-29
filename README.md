@@ -89,17 +89,11 @@ Nos generamos un archivo .env donde guardamos el Port de Mongo, la URI y las key
 Por último, tenemos nuestro archivo índex donde colocamos las credenciales, métodos  y rutas principales. 
 
 
-Social login
+**Social login**
 
-Para el social login hemos generado los headers y rutas en el archivo índex, en nuestro caso para google y Facebook. En el archivo passportSetup.js creamos la  configuración para conectar con las api de Facebook y google y definimos también el callback necesario. 
+Para el social login hemos generado los headers y rutas en el archivo índex, en nuestro caso para google y Facebook.  En el archivo passportSetup.js creamos la  configuración para conectar con las api de Facebook y google y definimos también el callback necesario.
 
-
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-
-passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
-
+```jsx
 passport.use(
   new GoogleStrategy(
     {
@@ -115,10 +109,11 @@ passport.use(
     }
   )
 );
+```
 
+En el archivo user.routes.js están las rutas para acceder al login de usuario por vía Facebook o google y las rutas de callback exigidas a las cuales van a redirigir después de hacer login. SI hacemos la petición al servidor nos devuelve código html para registrarnos o logarnos.
 
-En el archivo user.routes.js están las rutas para acceder al login de usuario por vía Facebook o google y las rutas de callback exigidas a las cuales van a redirigir después de hacer login. Si hacemos la petición al servidor nos devuelve código html para registrarnos o logarnos.
-
+```jsx
 UserRoutes.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
@@ -130,7 +125,7 @@ UserRoutes.get(
     failureRedirect: '/fail',
   })
 );
-
+```
 
 
 ## Autores
