@@ -12,9 +12,9 @@ const {
 
 PaintingsRoutes.get('/', getPaintings);
 PaintingsRoutes.get('/:date', getPaintingByDate);
-PaintingsRoutes.post('/', upload.single('image'), postPainting);
-PaintingsRoutes.patch('/:id', upload.single('image'), patchPainting);
-PaintingsRoutes.delete('/:id', deletePainting);
-PaintingsRoutes.put('/addauthortopainting', upload.single('image'), addAuthor);
+PaintingsRoutes.post('/', [isBasic], upload.single('image'), postPainting);
+PaintingsRoutes.patch('/:id', [isBasic], upload.single('image'), patchPainting);
+PaintingsRoutes.delete('/:id', [isAdmin], deletePainting);
+PaintingsRoutes.put('/addauthortopainting', [isBasic], upload.single('image'), addAuthor);
 
 module.exports = PaintingsRoutes;
