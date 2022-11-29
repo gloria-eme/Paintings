@@ -10,8 +10,8 @@ const {
 
 MuseumsRoutes.get('/', getMuseums);
 MuseumsRoutes.get('/:city', getMuseumsByCity);
-MuseumsRoutes.post('/', postMuseum);
-MuseumsRoutes.patch('/:id', patchMuseum);
-MuseumsRoutes.delete('/:id', deleteMuseum);
+MuseumsRoutes.post('/', [isBasic], postMuseum);
+MuseumsRoutes.patch('/:id', [isBasic], patchMuseum);
+MuseumsRoutes.delete('/:id', [isAdmin], deleteMuseum);
 
 module.exports = MuseumsRoutes;
