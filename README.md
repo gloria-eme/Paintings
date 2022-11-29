@@ -188,3 +188,5 @@ Para editar tenemos el método  `findByIdAndUpdate()` usando el id como param. H
 Gloria: https://github.com/gloria-eme
 Álvaro: https://github.com/alvaroLZ96
 María: https://github.com/mariasosaluna
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9d78b732-e350-4053-ae2b-75985f5c9910/Untitled.png)
